@@ -2,7 +2,7 @@ import vessl
 import time
 
 cnt = 0
-while True:
+for i in range(40):
     vessl.log(step=cnt, payload={"accuracy":cnt})
     cnt += 1
     time.sleep(20)
