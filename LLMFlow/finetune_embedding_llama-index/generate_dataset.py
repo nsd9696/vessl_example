@@ -10,6 +10,7 @@ from llama_index.schema import MetadataMode
 from tqdm.notebook import tqdm
 
 os.chdir("./examples")
+OPENAI_API_KEY=os.environ["OPENAI_API_KEY"]
 
 TRAIN_FILES = ['../data/haerae_article.pdf']
 TRAIN_CORPUS_FPATH = 'train_corpus.json'
@@ -49,7 +50,7 @@ def generate_queries(
     Automatically generate hypothetical questions that could be answered with
     doc in the corpus.
     """
-    llm = OpenAI(model='gpt-3.5-turbo', api_key="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")
+    llm = OpenAI(model='gpt-3.5-turbo', api_key=OPENAI_API_KEY)
 
     prompt_template = prompt_template or """\
     Context information is below.
