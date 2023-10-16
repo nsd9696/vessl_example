@@ -9,10 +9,9 @@ from llama_index.llms import OpenAI
 from llama_index.schema import MetadataMode
 from tqdm.notebook import tqdm
 
-os.chdir("./examples")
 OPENAI_API_KEY=os.environ["OPENAI_API_KEY"]
 
-TRAIN_FILES = ['../data/haerae_article.pdf']
+TRAIN_FILES = ['./root/data/haerae_article.pdf']
 TRAIN_CORPUS_FPATH = 'train_corpus.json'
 
 def load_corpus(files, verbose=False):
