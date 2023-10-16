@@ -105,4 +105,6 @@ train_dataset = {
 with open(TRAIN_DATASET_FPATH, 'w+') as f:
     json.dump(train_dataset, f)
 
+vessl.configure(organization_name="lucas", project_name="first-project")
+vessl.init()
 vessl.upload_dataset_volume_file(dataset_name="VSSLLMFLOW", source_path=TRAIN_DATASET_FPATH, dest_path=f"data/{TRAIN_DATASET_FPATH}")
