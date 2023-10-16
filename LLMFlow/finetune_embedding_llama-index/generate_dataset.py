@@ -8,7 +8,8 @@ from llama_index.node_parser import SimpleNodeParser
 from llama_index.schema import MetadataMode
 from llama_index.llms import OpenAI
 from llama_index.schema import MetadataMode
-from tqdm.notebook import tqdm
+from tqdm import tqdm
+import vessl
 
 OPENAI_API_KEY=os.environ["OPENAI_API_KEY"]
 
@@ -103,3 +104,5 @@ train_dataset = {
 }
 with open(TRAIN_DATASET_FPATH, 'w+') as f:
     json.dump(train_dataset, f)
+
+vessl.upload_dataset_volume_file(dataset_name="VSSLLMFLOW", source_path=TRAIN_DATASET_FPATH, dest_path=f"data/{TRAIN_DATASET_FPATH}")
