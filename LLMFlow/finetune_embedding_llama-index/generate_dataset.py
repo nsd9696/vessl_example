@@ -11,7 +11,7 @@ from tqdm.notebook import tqdm
 
 OPENAI_API_KEY=os.environ["OPENAI_API_KEY"]
 
-TRAIN_FILES = ['./root/data/haerae_article.pdf']
+TRAIN_FILES = ['../data/haerae_article.pdf']
 TRAIN_CORPUS_FPATH = 'train_corpus.json'
 
 def load_corpus(files, verbose=False):
