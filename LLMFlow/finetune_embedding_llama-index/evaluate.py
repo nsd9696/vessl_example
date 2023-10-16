@@ -7,7 +7,8 @@ from llama_index.schema import TextNode
 from llama_index.embeddings import OpenAIEmbedding
 from llama_index.llm_predictor import LLMPredictor
 from llama_index.llms import OpenAI
-
+import os
+OPENAI_API_KEY=os.environ["OPENAI_API_KEY"]
 TRAIN_DATASET_FPATH = 'train_dataset.json'
 with open(TRAIN_DATASET_FPATH, 'r+') as f:
     train_dataset = json.load(f)
@@ -17,7 +18,7 @@ dataset = train_dataset
 top_k=5,
 verbose=False
 
-llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", api_key="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"))
+llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", api_key=OPENAI_API_KEY))
 
 corpus = dataset['corpus']
 queries = dataset['queries']
