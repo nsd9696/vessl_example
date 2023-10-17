@@ -4,6 +4,7 @@ from sentence_transformers import SentenceTransformer
 from torch.utils.data import DataLoader
 from sentence_transformers import InputExample
 from sentence_transformers import losses
+from sentence_transformers.evaluation import InformationRetrievalEvaluator
 import shutil
 
 model_id = "BAAI/bge-small-en"
@@ -11,9 +12,13 @@ model = SentenceTransformer(model_id)
 DATASET_PATH = '/root/data'
 
 TRAIN_DATASET_FPATH = f'{DATASET_PATH}/data/train_dataset.json'
+VAL_DATASET_FPATH = f'{DATASET_PATH}/data/train_dataset.json'
+
 BATCH_SIZE = 10
 with open(TRAIN_DATASET_FPATH, 'r+') as f:
     train_dataset = json.load(f)
+with open(VAL_DATASET_FPATH, 'r+') as f:
+    val_dataset = json.load(f)
 
 dataset = train_dataset
 
@@ -33,6 +38,15 @@ loader = DataLoader(
 )
 
 loss = losses.MultipleNegativesRankingLoss(model)
+
+dataset = val_dataset
+
+corpus = dataset['corpus']
+queries = dataset['queries']
+relevant_docs = dataset['relevant_docs']
+
+evaluator = InformationRetrievalEvaluator(queries, corpus, relevant_docs)
+
 EPOCHS = 2
 
 def callback(score, epoch, steps):
@@ -47,6 +61,8 @@ model.fit(
     output_path='exp_finetune',
     show_progress_bar=True,
     callback=callback,
+    evaluator=evaluator, 
+    evaluation_steps=50,
 )
 shutil.make_archive('exp_finetune', 'zip', './exp_finetune/')
 
