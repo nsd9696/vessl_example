@@ -98,7 +98,7 @@ with open(TRAIN_RELEVANT_DOCS_FPATH, 'w+') as f:
     json.dump(train_relevant_docs, f)
 
 TRAIN_SOURCE_FPATH = 'train_dataset.json'
-TRAIN_DEST_FPATH = f'{DATASET_PATH}/data/train_dataset.json'
+TRAIN_DEST_FPATH = 'train_dataset.json'
 train_dataset = {
     'queries': train_queries,
     'corpus': train_corpus,
