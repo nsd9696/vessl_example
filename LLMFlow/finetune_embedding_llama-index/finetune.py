@@ -4,11 +4,13 @@ from sentence_transformers import SentenceTransformer
 from torch.utils.data import DataLoader
 from sentence_transformers import InputExample
 from sentence_transformers import losses
+import shutil
 
 model_id = "BAAI/bge-small-en"
 model = SentenceTransformer(model_id)
+DATASET_PATH = '/root/data'
 
-TRAIN_DATASET_FPATH = 'train_dataset.json'
+TRAIN_DATASET_FPATH = f'{DATASET_PATH}/train_dataset.json'
 BATCH_SIZE = 10
 with open(TRAIN_DATASET_FPATH, 'r+') as f:
     train_dataset = json.load(f)
@@ -46,5 +48,6 @@ model.fit(
     show_progress_bar=True,
     callback=callback,
 )
+shutil.make_archive('exp_finetune', 'zip', './exp_finetune/')
 
-vessl.output
+vessl.upload_model_volume_file(repository_name="VSSLLMFLOW", model_number=1, source_path="exp_finetune.zip", dest_path="/data/exp_finetune.zip")
