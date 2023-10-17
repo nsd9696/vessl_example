@@ -97,14 +97,15 @@ with open(TRAIN_QUERIES_FPATH, 'w+') as f:
 with open(TRAIN_RELEVANT_DOCS_FPATH, 'w+') as f:
     json.dump(train_relevant_docs, f)
 
+TRAIN_SOURCE_FPATH = 'train_dataset.json'
 TRAIN_DATASET_FPATH = f'{DATASET_PATH}/data/train_dataset.json'
 train_dataset = {
     'queries': train_queries,
     'corpus': train_corpus,
     'relevant_docs': train_relevant_docs,
 }
-with open(TRAIN_DATASET_FPATH, 'w+') as f:
+with open(TRAIN_SOURCE_FPATH, 'w+') as f:
     json.dump(train_dataset, f)
 
 vessl.configure(organization_name="lucas", project_name="first-project")
-vessl.upload_dataset_volume_file(dataset_name="VSSLLMFLOW", source_path=TRAIN_DATASET_FPATH, dest_path=f"/data/{TRAIN_DATASET_FPATH}", organization_name="lucas")
+vessl.upload_dataset_volume_file(dataset_name="VSSLLMFLOW", source_path=TRAIN_SOURCE_FPATH, dest_path=TRAIN_DATASET_FPATH, organization_name="lucas")
