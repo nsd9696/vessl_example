@@ -12,8 +12,9 @@ from tqdm import tqdm
 import vessl
 
 OPENAI_API_KEY=os.environ["OPENAI_API_KEY"]
+DATASET_PATH = '/root/data'
 
-TRAIN_FILES = ['/root/data/haerae_article.pdf']
+TRAIN_FILES = [f'{DATASET_PATH}/haerae_article.pdf']
 TRAIN_CORPUS_FPATH = 'train_corpus.json'
 
 def load_corpus(files, verbose=False):
@@ -96,7 +97,7 @@ with open(TRAIN_QUERIES_FPATH, 'w+') as f:
 with open(TRAIN_RELEVANT_DOCS_FPATH, 'w+') as f:
     json.dump(train_relevant_docs, f)
 
-TRAIN_DATASET_FPATH = 'train_dataset.json'
+TRAIN_DATASET_FPATH = f'{DATASET_PATH}/data/train_dataset.json'
 train_dataset = {
     'queries': train_queries,
     'corpus': train_corpus,
@@ -105,6 +106,6 @@ train_dataset = {
 with open(TRAIN_DATASET_FPATH, 'w+') as f:
     json.dump(train_dataset, f)
 
-vessl.configure(organization_name="lucas", project_name="first-project")
-vessl.init()
-vessl.upload_dataset_volume_file(dataset_name="VSSLLMFLOW", source_path=TRAIN_DATASET_FPATH, dest_path=f"/data/{TRAIN_DATASET_FPATH}", organization_name="lucas")
+# vessl.configure(organization_name="lucas", project_name="first-project")
+# vessl.init()
+# vessl.upload_dataset_volume_file(dataset_name="VSSLLMFLOW", source_path=TRAIN_DATASET_FPATH, dest_path=f"/data/{TRAIN_DATASET_FPATH}", organization_name="lucas")
