@@ -10,7 +10,7 @@ model_id = "BAAI/bge-small-en"
 model = SentenceTransformer(model_id)
 DATASET_PATH = '/root/data'
 
-TRAIN_DATASET_FPATH = f'{DATASET_PATH}/train_dataset.json'
+TRAIN_DATASET_FPATH = f'{DATASET_PATH}/data/train_dataset.json'
 BATCH_SIZE = 10
 with open(TRAIN_DATASET_FPATH, 'r+') as f:
     train_dataset = json.load(f)
