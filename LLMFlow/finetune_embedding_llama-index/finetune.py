@@ -50,7 +50,7 @@ evaluator = InformationRetrievalEvaluator(queries, corpus, relevant_docs)
 EPOCHS = 10
 
 def callback(score, epoch, steps):
-    vessl.log(step=steps, payload={"score":score})
+    vessl.log(step=epoch, payload={"score":score})
 
 warmup_steps = int(len(loader) * EPOCHS * 0.1)
 
