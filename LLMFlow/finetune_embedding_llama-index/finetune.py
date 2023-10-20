@@ -47,7 +47,7 @@ relevant_docs = dataset['relevant_docs']
 
 evaluator = InformationRetrievalEvaluator(queries, corpus, relevant_docs)
 
-EPOCHS = 2
+EPOCHS = 10
 
 def callback(score, epoch, steps):
     vessl.log(step=steps, payload={"score":score})
