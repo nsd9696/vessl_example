@@ -43,8 +43,16 @@ index = VectorStoreIndex(
 ) 
 retriever = index.as_retriever()
 
+prefix: str = "PROMPT"
+prompts = []
+for key, value in os.environ.items():
+    if key[:len(prefix)] == prefix:
+        prompts.append(value)
+
 test_prompts = ["What is Haerae?", "What is special in Haerae?"]
-for prompt in test_prompts:
+prompts += test_prompts
+
+for prompt in prompts:
     nodes = retriever.retrieve(prompt)
     print(f"⏳ Prompt: {prompt} is testing...")
     print(f"✅ Test promt {prompt} succeeded!")
