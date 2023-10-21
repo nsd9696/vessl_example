@@ -6,8 +6,16 @@ from llama_index.llm_predictor import LLMPredictor
 import json
 import os
 from PIL import Image
+from zipfile import ZipFile
 
 OPENAI_API_KEY=os.environ["OPENAI_API_KEY"]
+MODEL_DIR = "/root/mount/model"
+DATA_DIR = "/root/mount/data"
+MODEL_FILE = "exp_finetune.zip"
+DATA_FILE = "train_dataset.json"
+
+ZipFile(f"{MODEL_DIR}/{MODEL_FILE}").extractall(MODEL_DIR)
+
 im = Image.open("logo.ico")
 
 st.set_page_config(page_title="Chat with the Streamlit docs, powered by LlamaIndex", page_icon=im, layout="centered", initial_sidebar_state="auto", menu_items=None)
@@ -22,10 +30,11 @@ if "messages" not in st.session_state.keys(): # Initialize the chat messages his
 @st.cache_resource(show_spinner=False)
 def load_data():
     with st.spinner(text="Loading and indexing the Streamlit docs – hang tight! This should take 1-2 minutes."):
-        with open("train_dataset.json", 'r+') as f:
+        TRAIN_DATASET_FPATH = f'{DATA_DIR}/{DATA_FILE}'
+        with open(TRAIN_DATASET_FPATH, 'r+') as f:
             train_dataset = json.load(f)
 
-        embed_model = "local:exp_finetune" ## path 변경 확인
+        embed_model = "local:/root/mount/model/exp_finetune"
         dataset = train_dataset
         top_k=5,
         verbose=False
