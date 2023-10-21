@@ -3,3 +3,4 @@ sentence-transformers==2.2.2
 pypdf
 nltk
 llama-cpp-python
+streamlit
