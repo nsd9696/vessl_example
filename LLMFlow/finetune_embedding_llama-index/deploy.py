@@ -16,7 +16,7 @@ DATA_FILE = "train_dataset.json"
 
 ZipFile(f"{MODEL_DIR}/{MODEL_FILE}").extractall(MODEL_DIR)
 
-im = Image.open("logo.ico")
+im = Image.open("/root/examples/LLMFlow/finetune_embedding_llama-index/logo.ico")
 
 st.set_page_config(page_title="Chat with the Streamlit docs, powered by LlamaIndex", page_icon=im, layout="centered", initial_sidebar_state="auto", menu_items=None)
 st.image(im)
