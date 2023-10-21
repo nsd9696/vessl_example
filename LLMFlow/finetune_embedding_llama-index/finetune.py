@@ -9,7 +9,7 @@ import shutil
 
 model_id = "BAAI/bge-small-en"
 model = SentenceTransformer(model_id)
-DATASET_PATH = '/root/data'
+DATASET_PATH = '/root/mount'
 
 TRAIN_DATASET_FPATH = f'{DATASET_PATH}/data/train_dataset.json'
 VAL_DATASET_FPATH = f'{DATASET_PATH}/data/train_dataset.json'

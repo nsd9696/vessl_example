@@ -12,7 +12,7 @@ from tqdm import tqdm
 import vessl
 
 OPENAI_API_KEY=os.environ["OPENAI_API_KEY"]
-DATASET_PATH = '/root/data'
+DATASET_PATH = '/root/mount'
 
 TRAIN_FILES = [f'{DATASET_PATH}/haerae_article.pdf']
 TRAIN_CORPUS_FPATH = 'train_corpus.json'
