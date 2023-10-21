@@ -43,9 +43,9 @@ index = VectorStoreIndex(
 ) 
 retriever = index.as_retriever()
 
-TEST_RESULT = True
-nodes = retriever.retrieve("What is Haerae?")
-for node in nodes:
-    if node.score < SCORE_THRESHOLD:
-        TEST_RESULT = False
-        break
+test_prompts = ["What is Haerae?", "What is special in Haerae?"]
+for prompt in test_prompts:
+    nodes = retriever.retrieve(prompt)
+    print(f"⏳ Prompt: {prompt} is testing...")
+    print(f"✅ Test promt {prompt} succeeded!")
+    

@@ -64,7 +64,7 @@ model.fit(
     evaluator=evaluator, 
     evaluation_steps=50,
 )
-shutil.make_archive('exp_finetune', 'zip', './exp_finetune/')
+# shutil.make_archive('exp_finetune', 'zip', './exp_finetune/')
 
-vessl.configure(organization_name="lucas", project_name="first-project")
-vessl.upload_model_volume_file(repository_name="VSSLLMFLOW", model_number=1, source_path="exp_finetune.zip", dest_path="/data/exp_finetune.zip", organization_name="lucas")
+# vessl.configure(organization_name="lucas", project_name="first-project")
+# vessl.upload_model_volume_file(repository_name="VSSLLMFLOW", model_number=1, source_path="exp_finetune.zip", dest_path="/data/exp_finetune.zip", organization_name="lucas")
