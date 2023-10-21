@@ -8,12 +8,22 @@ from llama_index.embeddings import OpenAIEmbedding
 from llama_index.llm_predictor import LLMPredictor
 from llama_index.llms import OpenAI
 import os
+from zipfile import ZipFile
+
 OPENAI_API_KEY=os.environ["OPENAI_API_KEY"]
-TRAIN_DATASET_FPATH = 'train_dataset.json'
+SCORE_THRESHOLD=float(os.environ["SCORE_THRESHOLD"])
+MODEL_DIR = "/root/model"
+DATA_DIR = "/root/data/data"
+MODEL_FILE = "exp_finetune.zip"
+DATA_FILE = "train_dataset.json"
+
+ZipFile(f"{MODEL_DIR}/{MODEL_FILE}").extractall(MODEL_DIR)
+
+TRAIN_DATASET_FPATH = f'{DATA_DIR}/{DATA_FILE}'
 with open(TRAIN_DATASET_FPATH, 'r+') as f:
     train_dataset = json.load(f)
 
-embed_model = "local:exp_finetune"
+embed_model = "local:/root/model/exp_finetune" ## path 변경 확인
 dataset = train_dataset
 top_k=5,
 verbose=False
@@ -30,7 +40,12 @@ index = VectorStoreIndex(
     nodes, 
     service_context=service_context, 
     show_progress=True
-)
+) 
 retriever = index.as_retriever()
 
-vessl.output 
+TEST_RESULT = True
+nodes = retriever.retrieve("What is Haerae?")
+for node in nodes:
+    if node.score < SCORE_THRESHOLD:
+        TEST_RESULT = False
+        break
