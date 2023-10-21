@@ -12,8 +12,8 @@ from zipfile import ZipFile
 
 OPENAI_API_KEY=os.environ["OPENAI_API_KEY"]
 SCORE_THRESHOLD=float(os.environ["SCORE_THRESHOLD"])
-MODEL_DIR = "/root/model"
-DATA_DIR = "/root/data/data"
+MODEL_DIR = "/root/mount/model"
+DATA_DIR = "/root/mount/data"
 MODEL_FILE = "exp_finetune.zip"
 DATA_FILE = "train_dataset.json"
 
@@ -23,7 +23,7 @@ TRAIN_DATASET_FPATH = f'{DATA_DIR}/{DATA_FILE}'
 with open(TRAIN_DATASET_FPATH, 'r+') as f:
     train_dataset = json.load(f)
 
-embed_model = "local:/root/model/exp_finetune" ## path 변경 확인
+embed_model = "local:/root/mount/model/exp_finetune" ## path 변경 확인
 dataset = train_dataset
 top_k=5,
 verbose=False
