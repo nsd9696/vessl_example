@@ -42,6 +42,7 @@ index = VectorStoreIndex(
     show_progress=True
 ) 
 retriever = index.as_retriever()
+chat_engine = index.as_chat_engine(chat_mode="condense_question", verbose=True)
 
 prefix: str = "PROMPT"
 prompts = []
@@ -56,4 +57,7 @@ for prompt in prompts:
     nodes = retriever.retrieve(prompt)
     print(f"⏳ Prompt: {prompt} is testing...")
     print(f"✅ Test promt {prompt} succeeded!")
+    response = chat_engine.chat(prompt)
+    print(f"💬 Response: {response}")
+
     
