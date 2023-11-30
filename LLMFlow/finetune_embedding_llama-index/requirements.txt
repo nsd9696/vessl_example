@@ -1,5 +1,6 @@
 llama-index==0.8.5.post2
 sentence-transformers==2.2.2
+openai==0.28
 pypdf
 nltk
 llama-cpp-python
