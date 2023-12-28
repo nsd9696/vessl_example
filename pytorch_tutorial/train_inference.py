@@ -11,6 +11,8 @@ import time
 import os
 from PIL import Image
 from tempfile import TemporaryDirectory
+from utils import imshow
+import vessl
 
 cudnn.benchmark = True
 
@@ -39,6 +41,33 @@ dataloaders = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=4,
                                              shuffle=True, num_workers=4)
               for x in ['train', 'val']}
 dataset_sizes = {x: len(image_datasets[x]) for x in ['train', 'val']}
+class_names = image_datasets['train'].classes
+
+def visualize_model(model, num_images=6):
+    was_training = model.training
+    model.eval()
+    images_so_far = 0
+    fig = plt.figure()
+
+    with torch.no_grad():
+        for i, (inputs, labels) in enumerate(dataloaders['val']):
+            inputs = inputs.to(device)
+            labels = labels.to(device)
+
+            outputs = model(inputs)
+            _, preds = torch.max(outputs, 1)
+
+            for j in range(inputs.size()[0]):
+                images_so_far += 1
+                ax = plt.subplot(num_images//2, 2, images_so_far)
+                ax.axis('off')
+                ax.set_title(f'predicted: {class_names[preds[j]]}')
+                imshow(inputs.cpu().data[j])
+
+                if images_so_far == num_images:
+                    model.train(mode=was_training)
+                    return
+        model.train(mode=was_training)
 
 def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
     since = time.time()
@@ -100,6 +129,8 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
                     best_acc = epoch_acc
                     torch.save(model.state_dict(), best_model_params_path)
 
+            vessl.log(step=epoch, payload={'loss': epoch_acc})
+            vessl.log(step=epoch, payload={'loss': epoch_loss})
             print()
 
         time_elapsed = time.time() - since
@@ -110,9 +141,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
         model.load_state_dict(torch.load(best_model_params_path))
     return model
 
-def finetune_resnet():
-    class_names = image_datasets['train'].classes
-    
+def finetune_resnet():    
     model_ft = models.resnet18(weights='IMAGENET1K_V1')
     num_ftrs = model_ft.fc.in_features
     # Here the size of each output sample is set to 2.
@@ -132,3 +161,23 @@ def finetune_resnet():
     model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler, num_epochs=25)
     return model_ft
 
+
+def visualize_model_predictions(model,img_path):
+    was_training = model.training
+    model.eval()
+
+    img = Image.open(img_path)
+    img = data_transforms['val'](img)
+    img = img.unsqueeze(0)
+    img = img.to(device)
+
+    with torch.no_grad():
+        outputs = model(img)
+        _, preds = torch.max(outputs, 1)
+
+        ax = plt.subplot(2,2,1)
+        ax.axis('off')
+        ax.set_title(f'Predicted: {class_names[preds[0]]}')
+        imshow(img.cpu().data[0])
+        
+        model.train(mode=was_training)  
