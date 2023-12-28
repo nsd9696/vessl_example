@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
-from train import finetune_resnet
-from inference import visualize_model_predictions
+from pytorch_tutorial.train_inference import finetune_resnet
+from train_inference import visualize_model_predictions
 from utils import visualize_model
 
 model = finetune_resnet()
