@@ -2,7 +2,9 @@ import torch
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
-import mlflow 
+import wandb
+
+wandb.init()
 
 def imshow(inp, title=None):
     """Display image for Tensor."""
@@ -14,9 +16,13 @@ def imshow(inp, title=None):
     plt.imshow(inp)
     if title is not None:
         plt.title(title)
-        plt.savefig(f'{title}.jpg')
-        # mlflow.log_image(Image.open(f'{title}.jpg'), f"{title}")
-    plt.savefig('result.jpg')
-    # mlflow.log_image(Image.open('result.jpg'), "result")
+        plt.savefig(f'{title}.png')
+        wandb.log(
+            {wandb.Image(Image.open(f'{title}.png'), caption=f"{title}")}
+        )
+    plt.savefig('result.png')
+    wandb.log(
+            {wandb.Image(Image.open('result.png'), caption="result")}
+        )
     plt.pause(0.001)  # pause a bit so that plots are updated
 
