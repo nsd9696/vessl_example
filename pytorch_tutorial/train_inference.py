@@ -129,8 +129,8 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
                     best_acc = epoch_acc
                     torch.save(model.state_dict(), best_model_params_path)
 
-            vessl.log(step=epoch, payload={'loss': epoch_acc})
-            vessl.log(step=epoch, payload={'accuracy': epoch_loss})
+            vessl.log(step=epoch, payload={'accuracy': epoch_acc})
+            vessl.log(step=epoch, payload={'loss': epoch_loss})
             print()
 
         time_elapsed = time.time() - since
