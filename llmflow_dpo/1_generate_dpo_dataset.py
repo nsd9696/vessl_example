@@ -52,11 +52,11 @@ def generate_examples(prompt_list, model, tokenizer, max_length=512):
         examples.append(example)
     return examples
 
-with open('../data/prompts.txt') as f:
+with open('/root/data/prompts.txt') as f:
     prompts = [line.rstrip('\n').strip('"').strip("'") for line in f]
 
 generated_examples = generate_examples(prompts, model, tokenizer)
 
 # Save generated examples to import in Label Studio
-with open('../data/input_data.json', 'w') as f:
+with open('/root/data/input_data.json', 'w') as f:
     json.dump(generated_examples, f, indent=2)
