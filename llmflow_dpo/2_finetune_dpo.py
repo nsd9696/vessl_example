@@ -72,5 +72,4 @@ dpo_trainer = DPOTrainer(
 dpo_trainer.train()
 
 # Save the model
-tokenizer.push_to_hub("vessl/llama-3-8b-bnb-4bit-dpo-qlora-adapter", token=HF_TOKEN)
-dpo_trainer.model.push_to_hub("vessl/llama-3-8b-bnb-4bit-dpo-qlora-adapter", token=HF_TOKEN)
+dpo_trainer.push_to_hub_merged("vessl/llama-3-8b-bnb-4bit-dpo-qlora", tokenizer, save_method = "merged_4bit", token=HF_TOKEN)
