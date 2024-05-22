@@ -72,5 +72,5 @@ dpo_trainer = DPOTrainer(
 dpo_trainer.train()
 
 # Save the model
-model.save_pretrained_merged("outputs", tokenizer, save_method = "merged_4bit")
-model.push_to_hub_merged("vessl/llama-3-8b-bnb-4bit-dpo-qlora", tokenizer, save_method = "merged_4bit", token=HF_TOKEN)
+model.save_pretrained_merged("outputs", tokenizer, save_method = "merged_4bit_forced")
+model.push_to_hub_merged("vessl/llama-3-8b-bnb-4bit-dpo-qlora", tokenizer, save_method = "merged_4bit_forced", token=HF_TOKEN)
